@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adil M | Software Developer</title>
+
+    <meta
+      name="description"
+      content="Adil M – Software Developer specializing in Python, Django, automation, and server management."
+    />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="overlay"></div>
+      <div class="hero-content">
+        <div class="profile">
+          <img src="images/profile.jpg" alt="Adil M" />
+        </div>
+        <h1>Adil M</h1>
+        <p class="subtitle">Software Developer</p>
+
+        <div class="hero-buttons">
+          <a href="resume.pdf" download class="btn">Download Resume</a>
+          <a href="#projects" class="btn outline">View Projects</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="experience-section">
+      <h2 class="section-title">Experience</h2>
+
+      <div class="experience-grid">
+        <div class="experience-card">
+          <span class="date">2025 – Present</span>
+          <h3>Assistant Techie</h3>
+          <p class="company">
+            <a href="https://ticketswithtours.com/" class="no-underline">
+              TicketsWithTours</a
+            >
+          </p>
+          <ul>
+            <li>
+              Managed and monitored servers to maintain uptime, performance, and
+              system stability.
+            </li>
+            <li>
+              Handled email account management including setup, configuration,
+              access control, and issue resolution.
+            </li>
+            <li>
+              Performed web automation tasks to reduce manual operations and
+              improve workflow efficiency.
+            </li>
+            <li>
+              Provided technical support for internal tools and operational
+              systems.
+            </li>
+          </ul>
+        </div>
+
+        <div class="experience-card">
+          <span class="date">2024 – 2025</span>
+          <h3>Python Django Intern</h3>
+          <p class="company">
+            <a href="https://www.techmindz.com/" class="no-underline"
+              >Techmindz</a
+            >
+          </p>
+          <ul>
+            <li>Developed Django-based web applications.</li>
+            <li>Designed responsive and user-friendly UI/UX to improve usability and engagement.</li>
+            <li>Implemented CRUD functionality and admin dashboards.</li>
+            <li>Worked with MySQL databases and frontend integration.</li>
+            <li>Followed best coding practices and participated in code reviews.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="skills-section">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card">Python & Django</div>
+        <div class="skill-card">HTML, CSS, JavaScript</div>
+        <div class="skill-card">MySQL & Databases</div>
+        <div class="skill-card">Server & Email Management</div>
+        <div class="skill-card">Web Automation</div>
+        <div class="skill-card">Problem Solving</div>
+        <div class="skill-card">Adaptability</div>
+        <div class="skill-card">Time Management</div>
+        <div class="skill-card">Critical Thinking</div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="projects-section">
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card" onclick="openModal('p1')">
+          Project & Task Management Tool
+        </div>
+        <div class="project-card" onclick="openModal('p2')">
+          Road Damage Detection
+        </div>
+        <div class="project-card" onclick="openModal('p3')">
+          Culinary Operations App
+        </div>
+        <div class="project-card" onclick="openModal('p4')">
+          Facebook Login Page Clone (Django)
+        </div>
+        <div class="project-card" onclick="openModal('p5')">
+          Instagram Clone (Django)
+        </div>
+      </div>
+    </section>
+
+    <!-- CONNECT -->
+    <section class="connect-section">
+      <h2 class="section-title">Connect</h2>
+      <div class="connect-grid">
+        <a
+          href="https://github.com/adilmundol"
+          target="_blank"
+          class="connect-card"
+        >
+          <i class="fab fa-github"></i> GitHub
+        </a>
+        <a
+          href="https://www.linkedin.com/in/adilmundol"
+          target="_blank"
+          class="connect-card"
+        >
+          <i class="fab fa-linkedin"></i> LinkedIn
+        </a>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section">
+      <h2 class="section-title">Contact</h2>
+      <form
+        class="contact-form"
+        action="https://formspree.io/f/xnjzekzg"
+        method="POST"
+      >
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <textarea name="message" placeholder="Your Message" required></textarea>
+        <button class="btn">Send Message</button>
+      </form>
+    </section>
+
+    <footer>© 2026 Adil M</footer>
+
+    <!-- MODALS -->
+    <div class="modal" id="p1" onclick="outsideClose(event, 'p1')">
+      <div class="modal-box">
+        <span class="close" onclick="closeModal('p1')">×</span>
+        <h2>Project & Task Management Tool</h2>
+        <p>
+          A web-based application designed to manage projects and tasks
+          efficiently within a team environment.
+        </p>
+
+        <ul>
+          <li>
+            Developed a web-based project and task management system using
+            Django.
+          </li>
+          <li>
+            Implemented role-based access where admins manage projects and
+            assign tasks to users.
+          </li>
+          <li>
+            Enabled users to view assigned tasks, update status, and track
+            progress.
+          </li>
+          <li>
+            Added task prioritization and progress monitoring through an admin
+            panel.
+          </li>
+          <li>
+            Designed and managed the database using MySQL for efficient data
+            handling.
+          </li>
+        </ul>
+
+        <p><strong>Tech:</strong> Django, MySQL, HTML, CSS, JavaScript</p>
+        <a
+          href="https://github.com/adilmundol/Task_management_system"
+          target="_blank"
+          class="connect-card"
+        >
+          <i class="fab fa-github"></i> Task Management System
+        </a>
+        <p></p>
+        <a
+          href="https://github.com/adilmundol/taskify"
+          target="_blank"
+          class="connect-card" >
+          <i class="fab fa-github"></i> Taskify
+        </a>
+      </div>
+    </div>
+
+    <div class="modal" id="p2" onclick="outsideClose(event, 'p2')">
+      <div class="modal-box">
+        <span class="close" onclick="closeModal('p2')">×</span>
+        <h2>Road Damage Detection</h2>
+        <p>
+          AI-powered system using YOLOv5 to detect potholes and cracks from
+          images.
+        </p>
+
+        <ul>
+          <li>
+            Built an AI-based road damage detection system using the YOLOv5
+            model.
+          </li>
+          <li>
+            Trained the model to identify road damages such as potholes from
+            images.
+          </li>
+          <li>
+            Applied computer vision techniques for real-time object detection.
+          </li>
+          <li>
+            Automated road condition analysis to reduce manual inspection
+            efforts.
+          </li>
+          <li>
+            Demonstrated practical use of machine learning in real-world
+            infrastructure problems.
+          </li>
+        </ul>
+
+        <p><strong>Tech:</strong> Python, YOLOv5, OpenCV</p>
+      </div>
+    </div>
+
+    <div class="modal" id="p3" onclick="outsideClose(event, 'p3')">
+      <div class="modal-box">
+        <span class="close" onclick="closeModal('p3')">×</span>
+        <h2>Culinary Operations App</h2>
+        <p>
+          Mobile app to manage restaurant orders, menus, and kitchen workflows.
+        </p>
+
+        <ul>
+          <li>
+            Developed a mobile application to manage restaurant and kitchen
+            operations.
+          </li>
+          <li>
+            Implemented real-time order tracking and kitchen workflow
+            management.
+          </li>
+          <li>
+            Used Firebase for authentication and real-time database updates.
+          </li>
+          <li>
+            Designed a mobile-friendly interface for staff to monitor order
+            status.
+          </li>
+          <li>Improved coordination between front desk and kitchen teams.</li>
+        </ul>
+
+        <p><strong>Tech:</strong> React Native, Firebase, Expo</p>
+      </div>
+    </div>
+
+    <div class="modal" id="p4" onclick="outsideClose(event, 'p4')">
+      <div class="modal-box">
+        <span class="close" onclick="closeModal('p4')">×</span>
+        <h2>Facebook Login Page Clone (Django)</h2>
+        <p>
+          A Django-based web project that replicates the Facebook-style login
+          interface with UI accuracy.
+        </p>
+
+        <ul>
+          <li>Created a Facebook-like login page using Django templates.</li>
+          <li>Implemented basic user authentication logic using Django.</li>
+          <li>
+            Designed the layout to closely match the original Facebook login UI.
+          </li>
+          <li>Focused on form validation and clean user input handling.</li>
+        </ul>
+
+        <p><strong>Tech:</strong> Django, SQLite, HTML, CSS, JavaScript</p>
+        <a
+          href="https://github.com/adilmundol/django_facebook"
+          target="_blank"
+          class="connect-card" >
+          <i class="fab fa-github"></i> Facebook Login Page Clone (Django)
+        </a>
+      </div>
+    </div>
+    <div class="modal" id="p5" onclick="outsideClose(event, 'p5')">
+      <div class="modal-box">
+        <span class="close" onclick="closeModal('p5')">×</span>
+        <h2>Instagram Clone (Django)</h2>
+        <p>
+          A full-stack Instagram clone built with Django, replicating the core
+          features and user experience of the original platform.
+        </p>
+        <ul>
+          <li>
+            Developed an Instagram-style web application using Django, HTML, and
+            CSS.
+          </li>
+          <li>
+            Implemented secure user authentication with multiple login flows.
+          </li>
+          <li>Enabled users to upload, edit, and delete images.</li>
+          <li>
+            Built social interactions including liking and commenting on posts.
+          </li>
+          <li>Allowed users to view other user profiles and posts.</li>
+          <li>Designed a responsive UI closely matching Instagram’s layout.</li>
+        </ul>
+        <p><strong>Tech:</strong> Django, SQLite, HTML, CSS, JavaScript</p>
+        <a
+          href="https://github.com/adilmundol/instagram_django"
+          target="_blank"
+          class="connect-card" >
+          <i class="fab fa-github"></i> Instagram Clone (Django)
+        </a>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
