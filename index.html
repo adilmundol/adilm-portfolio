@@ -174,10 +174,12 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:900;
 
 /* MARQUEE */
 .marquee{background:var(--ink);color:var(--paper);padding:.6rem 0;overflow:hidden;white-space:nowrap}
-.mtrack{display:inline-flex;animation:scroll 22s linear infinite}
+.mtrack{display:inline-flex;animation:scroll 22s linear infinite;-webkit-animation:scroll 22s linear infinite;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .mtrack span{font-family:var(--serif);font-size:1rem;letter-spacing:.08em;padding:0 1.6rem}
 .mtrack .dot{color:var(--red);font-size:.65rem}
-@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes scroll{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@-webkit-keyframes scroll{from{-webkit-transform:translate3d(0,0,0)}to{-webkit-transform:translate3d(-50%,0,0)}}
+.marquee{...-webkit-transform:translateZ(0);transform:translateZ(0)}
 
 /* SECTION */
 .sec{padding:5.5rem clamp(1rem,5vw,4rem)}
@@ -446,8 +448,10 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:900;
     <div class="hero-text">
       <p class="hero-eyebrow reveal"><span class="avail-dot"></span>Available for opportunities</p>
       <h1 class="hero-name reveal d1">ADIL<br><em>MUNDOL</em></h1>
-      <p class="hero-desc reveal d2">I'm a Software Developer and Freelance Technical Specialist experienced in Python and Django, contributing to real-world web applications and live production systems.
-        Skilled in backend development, technical support, server monitoring, troubleshooting, and automation, focused on building reliable, efficient, and scalable solutions.</p>
+      <p class="hero-desc reveal d2">I'm a Software Developer currently working with Python and Django,
+            contributing to real-world web applications and live production systems.
+            I work on backend development, technical support, server monitoring,
+            and automation while continuously improving my skills.</p>
       <div class="hero-btns reveal d2">
         <a href="#projects" class="btn-solid">View Work</a>
         <a href="#contact" class="btn-ghost">Let's Talk</a>
