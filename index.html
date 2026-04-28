@@ -178,46 +178,22 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:900;
 .btn-resume svg{width:14px;height:14px;flex-shrink:0}
 
 /* ═══════════════════════════════════
-   MARQUEE — Safari iOS fix
-   Key: use translate3d, force GPU, correct duplicate content
+   MARQUEE — JS-driven, works on all iOS Safari
    ═══════════════════════════════════ */
 .marquee{
   background:var(--ink);color:var(--paper);
   padding:.6rem 0;overflow:hidden;white-space:nowrap;
-  /* Prevent content flash on Safari */
   -webkit-transform:translateZ(0);
   transform:translateZ(0);
 }
 .mtrack{
-  display:-webkit-inline-flex;
   display:inline-flex;
-  /* Use translate3d instead of translateX for GPU compositing on iOS Safari */
-  -webkit-animation:marquee-scroll 28s linear infinite;
-  animation:marquee-scroll 28s linear infinite;
   will-change:transform;
-  /* Prevent subpixel rendering issues on Safari */
   -webkit-backface-visibility:hidden;
   backface-visibility:hidden;
-  -webkit-perspective:1000px;
-  perspective:1000px;
-}
-/* Pause on hover — helps prevent glitch on interaction */
-.marquee:hover .mtrack{
-  -webkit-animation-play-state:paused;
-  animation-play-state:paused;
 }
 .mtrack span{font-family:var(--serif);font-size:1rem;letter-spacing:.08em;padding:0 1.6rem}
 .mtrack .dot{color:var(--red);font-size:.65rem}
-
-/* Animate exactly -50% — works when track content is duplicated (2 identical halves) */
-@-webkit-keyframes marquee-scroll{
-  from{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
-  to{-webkit-transform:translate3d(-50%,0,0);transform:translate3d(-50%,0,0)}
-}
-@keyframes marquee-scroll{
-  from{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
-  to{-webkit-transform:translate3d(-50%,0,0);transform:translate3d(-50%,0,0)}
-}
 
 /* SECTION */
 .sec{padding:5.5rem clamp(1rem,5vw,4rem)}
@@ -465,7 +441,6 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:900;
   *,*::before,*::after{-webkit-animation-duration:.01ms!important;animation-duration:.01ms!important;-webkit-transition-duration:.01ms!important;transition-duration:.01ms!important}
   .reveal{opacity:1;-webkit-transform:none;transform:none}
   .vsc{-webkit-animation:none;animation:none}
-  .mtrack{-webkit-animation:none;animation:none}
 }
 </style>
 </head>
@@ -575,23 +550,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:900;
   </div>
 </section>
 
-<!-- MARQUEE
-     IMPORTANT: Content is duplicated 4× so -50% always lands on a clean seam.
-     Safari iOS needs enough content width to avoid jump-reset glitch. -->
+<!-- MARQUEE — JS clones content and drives via rAF for iOS Safari compatibility -->
 <div class="marquee" aria-hidden="true">
-  <div class="mtrack">
-    <span>Python</span><span class="dot">●</span><span>Django</span><span class="dot">●</span>
-    <span>JavaScript</span><span class="dot">●</span><span>Web Automation</span><span class="dot">●</span>
-    <span>Server Management</span><span class="dot">●</span><span>React Native</span><span class="dot">●</span>
-    <span>Full-Stack Dev</span><span class="dot">●</span><span>Technical Support</span><span class="dot">●</span>
-    <span>Python</span><span class="dot">●</span><span>Django</span><span class="dot">●</span>
-    <span>JavaScript</span><span class="dot">●</span><span>Web Automation</span><span class="dot">●</span>
-    <span>Server Management</span><span class="dot">●</span><span>React Native</span><span class="dot">●</span>
-    <span>Full-Stack Dev</span><span class="dot">●</span><span>Technical Support</span><span class="dot">●</span>
-    <span>Python</span><span class="dot">●</span><span>Django</span><span class="dot">●</span>
-    <span>JavaScript</span><span class="dot">●</span><span>Web Automation</span><span class="dot">●</span>
-    <span>Server Management</span><span class="dot">●</span><span>React Native</span><span class="dot">●</span>
-    <span>Full-Stack Dev</span><span class="dot">●</span><span>Technical Support</span><span class="dot">●</span>
+  <div class="mtrack" id="mtrack">
     <span>Python</span><span class="dot">●</span><span>Django</span><span class="dot">●</span>
     <span>JavaScript</span><span class="dot">●</span><span>Web Automation</span><span class="dot">●</span>
     <span>Server Management</span><span class="dot">●</span><span>React Native</span><span class="dot">●</span>
@@ -778,6 +739,49 @@ document.querySelectorAll(".reveal").forEach(el => io.observe(el));
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(build, 150);
   });
+})();
+
+// JS-driven marquee — works on all iOS Safari versions
+// Avoids CSS animation + translate3d -50% bug where width isn't computed in time
+(function(){
+  var track = document.getElementById("mtrack");
+  if (!track) return;
+
+  // Respect reduced motion
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  // Clone the original content once so we have a seamless loop
+  var clone = track.innerHTML;
+  track.innerHTML = clone + clone;
+
+  var x = 0;
+  var speed = 0.6; // px per frame — adjust to taste
+  var halfW = 0;
+
+  function measure() {
+    // Half = one full copy width (the seam point to reset at)
+    halfW = track.scrollWidth / 2;
+  }
+
+  // Measure after fonts/layout settle
+  setTimeout(measure, 200);
+  window.addEventListener("resize", measure);
+
+  var paused = false;
+  track.parentElement.addEventListener("mouseenter", function(){ paused = true; });
+  track.parentElement.addEventListener("mouseleave", function(){ paused = false; });
+
+  function tick() {
+    if (!paused) {
+      x -= speed;
+      // When we've scrolled one full copy, snap back silently
+      if (halfW > 0 && Math.abs(x) >= halfW) x = 0;
+      track.style.webkitTransform = "translate3d(" + x + "px,0,0)";
+      track.style.transform       = "translate3d(" + x + "px,0,0)";
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 })();
 </script>
 </body>
